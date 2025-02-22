@@ -1,21 +1,28 @@
-const express = require('express');
-const dotenv = require('dotenv');
+const express = require("express");
+const dotenv = require("dotenv");
+const { BASE_PATHS } = require("./src/consts/basePaths");
+
+const systemRoutes = require("./src/routes/systemRoutes");
+const taskRoutes = require("./src/routes/taskRoutes");
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-
 const app = express();
+
 app.use(express.json());
 
-const router = express.Router();
+app.use(BASE_PATHS.SERVER, systemRoutes);
+app.use(BASE_PATHS.TASKS, taskRoutes);
 
-router.get('/', (req, res) => {
-  res.json({ res: 'Server is up and running' });
+// Middleware de erros
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  const errCode = err.code || 500;
+
+  res.status(errCode).json({ message: err.message });
 });
-
-app.use('/', router);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-})
+});

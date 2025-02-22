@@ -1,0 +1,3 @@
+exports.COLLECTIONS = {
+  TASKS: "tasks",
+};
