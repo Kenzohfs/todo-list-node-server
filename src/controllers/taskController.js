@@ -7,7 +7,7 @@ exports.getAllTasks = asyncHandler(async (req, res) => {
 });
 
 exports.createTask = asyncHandler(async (req, res) => {
-  const task = await taskHandler.createTask(req.body);
+  const task = await taskHandler.createTask(req.body, req);
   res.status(201).json(task);
 });
 

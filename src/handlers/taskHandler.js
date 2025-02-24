@@ -1,16 +1,17 @@
 const os = require("os");
 const taskRepo = require("../repos/taskRepository");
 const Task = require("../models/taskModel");
+const getHostnameFromIp = require("../utils/reverseDns");
 
 exports.getTasks = async () => {
   return await taskRepo.getAllTasks();
 };
 
-exports.createTask = async (data) => {
+exports.createTask = async (data, req) => {
   const taskModel = new Task(data.title, data.responsable, data.status);
   taskModel.validate();
 
-  const hostname = os.hostname();
+  const hostname = await getHostnameFromIp(req.ip);
   const taskData = {
     title: taskModel.title,
     description: taskModel.description || "",
