@@ -15,6 +15,14 @@ exports.getAllTasks = async () => {
   return tasks;
 };
 
+exports.getTaskById = async (id) => {
+  const taskDoc = await db.collection(COLLECTIONS.TASKS).doc(id).get();
+
+  if (!taskDoc.exists) return null;
+
+  return { id: taskDoc.id, ...taskDoc.data() };
+};
+
 exports.createTask = async (data) => {
   const taskRef = await db.collection(COLLECTIONS.TASKS).add(data);
   const taskDoc = await taskRef.get();

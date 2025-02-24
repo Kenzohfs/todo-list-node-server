@@ -17,19 +17,22 @@ exports.register = async (data) => {
     throw err;
   }
 
-  const hashedPassword = await bcrypt.hash(data.password, SALT_ROUNDS);
-
-  const user = new User(data.name, data.email, hashedPassword);
+  const user = new User(data.name, data.email, data.password);
   user.validate();
+
+  const hashedPassword = await bcrypt.hash(data.password, SALT_ROUNDS);
 
   const newUser = {
     name: user.name,
     email: user.email,
-    password: user.password,
+    password: hashedPassword,
     createdAt: new Date(),
   };
 
-  return await userRepo.createUser(newUser);
+  const createdUser = await userRepo.createUser(newUser);
+  delete createdUser.password;
+
+  return createdUser;
 };
 
 exports.login = async (data) => {

@@ -16,8 +16,20 @@ class User {
       throw err;
     }
 
+    if (!this.email.includes("@")) {
+      const err = new Error("Invalid email");
+      err.statusCode = 400;
+      throw err;
+    }
+
     if (!this.password) {
       const err = new Error("Password is required");
+      err.statusCode = 400;
+      throw err;
+    }
+
+    if (this.password.length < 8) {
+      const err = new Error("Password must be at least 8 characters long");
       err.statusCode = 400;
       throw err;
     }

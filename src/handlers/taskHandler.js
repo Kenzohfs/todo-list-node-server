@@ -24,6 +24,13 @@ exports.createTask = async (data) => {
 };
 
 exports.updateTask = async (id, updateData) => {
+  const task = await taskRepo.getTaskById(id);
+  if (!task) {
+    const err = new Error("Task not found");
+    err.statusCode = 404;
+    throw err;
+  }
+
   Task.validateUpdate(updateData);
 
   await taskRepo.updateTask(id, updateData);
