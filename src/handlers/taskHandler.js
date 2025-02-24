@@ -1,23 +1,21 @@
 const os = require("os");
 const taskRepo = require("../repos/taskRepository");
+const Task = require("../models/taskModel");
 
 exports.getTasks = async () => {
   return await taskRepo.getAllTasks();
 };
 
 exports.createTask = async (data) => {
-  if (!data.title) {
-    const err = new Error("Title is required");
-    err.statusCode = 400;
-    throw err;
-  }
+  const taskModel = new Task(data.title, data.responsable, data.status);
+  taskModel.validate();
 
   const hostname = os.hostname();
   const taskData = {
-    title: data.title,
-    description: data.description || "",
-    responsable: data.responsable || "",
-    status: data.status || "to-do",
+    title: taskModel.title,
+    description: taskModel.description || "",
+    responsable: taskModel.responsable,
+    status: taskModel.status,
     hostname,
     createdAt: new Date(),
   };
@@ -26,5 +24,7 @@ exports.createTask = async (data) => {
 };
 
 exports.updateTask = async (id, updateData) => {
+  Task.validateUpdate(updateData);
+
   await taskRepo.updateTask(id, updateData);
 };

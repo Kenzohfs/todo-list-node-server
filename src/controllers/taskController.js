@@ -1,8 +1,5 @@
 const taskHandler = require("../handlers/taskHandler");
-
-const asyncHandler = (fn) => (req, res, next) => {
-  Promise.resolve(fn(req, res, next)).catch(next);
-};
+const { asyncHandler } = require("../utils/asyncHandler");
 
 exports.getAllTasks = asyncHandler(async (req, res) => {
   const tasks = await taskHandler.getTasks();

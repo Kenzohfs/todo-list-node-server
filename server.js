@@ -17,8 +17,8 @@ app.use(BASE_PATHS.TASKS, taskRoutes);
 
 // Middleware de erros
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  const errCode = err.code || 500;
+  console.log(err.stack);
+  const errCode = err.statusCode || 500;
 
   res.status(errCode).json({ message: err.message });
 });
