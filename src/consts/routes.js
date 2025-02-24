@@ -6,4 +6,8 @@ exports.ROUTES = {
   STATUS: "/status",
   REGISTER: "/register",
   LOGIN: "/login",
+  GET_STATUS: "/",
+  POST_STATUS: "/",
+  PUT_STATUS: "/:id",
+  DELETE_STATUS: "/:id",
 };

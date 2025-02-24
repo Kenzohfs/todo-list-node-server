@@ -1,4 +1,3 @@
-const os = require("os");
 const taskRepo = require("../repos/taskRepository");
 const Task = require("../models/taskModel");
 const getHostnameFromIp = require("../utils/reverseDns");

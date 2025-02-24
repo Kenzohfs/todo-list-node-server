@@ -7,6 +7,7 @@ const { BASE_PATHS } = require("./src/consts/basePaths");
 
 const systemRoutes = require("./src/routes/systemRoutes");
 const taskRoutes = require("./src/routes/taskRoutes");
+const statusRoutes = require("./src/routes/statusRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 
 const { protect } = require("./src/middleware/authMiddleware");
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(BASE_PATHS.SERVER, systemRoutes);
 app.use(BASE_PATHS.TASKS, protect, taskRoutes);
 app.use(BASE_PATHS.AUTH, authRoutes);
+app.use(BASE_PATHS.STATUS, protect, statusRoutes);
 
 // Middleware de erros
 app.use((err, req, res, next) => {
