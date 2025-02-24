@@ -36,15 +36,6 @@ exports.register = async (data) => {
 };
 
 exports.login = async (data, req) => {
-  require("dns").reverse(req.ip, function (err, domains) {
-    if (err) {
-      console.log(err.toString());
-      return;
-    }
-    console.log(domains);
-  });
-  console.log(req.host);
-  console.log(req.headers);
   Auth.validate(data);
 
   const user = await userRepo.getUserByEmail(data.email);
