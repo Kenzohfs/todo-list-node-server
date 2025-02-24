@@ -28,3 +28,7 @@ exports.updateTask = async (id, updateData) => {
 
   await taskRepo.updateTask(id, updateData);
 };
+
+exports.deleteTask = async (id) => {
+  await taskRepo.deleteTask(id);
+};

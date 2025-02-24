@@ -25,3 +25,7 @@ exports.createTask = async (data) => {
 exports.updateTask = async (id, updateData) => {
   await db.collection(COLLECTIONS.TASKS).doc(id).update(updateData);
 };
+
+exports.deleteTask = async (id) => {
+  await db.collection(COLLECTIONS.TASKS).doc(id).delete();
+};

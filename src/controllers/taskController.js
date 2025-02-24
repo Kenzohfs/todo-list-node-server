@@ -15,3 +15,8 @@ exports.updateTask = asyncHandler(async (req, res) => {
   await taskHandler.updateTask(req.params.id, req.body);
   res.status(204).end();
 });
+
+exports.deleteTask = asyncHandler(async (req, res) => {
+  await taskHandler.deleteTask(req.params.id);
+  res.status(204).end();
+});
