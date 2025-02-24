@@ -4,4 +4,6 @@ exports.ROUTES = {
   PUT_TASK: "/:id",
   DELETE_TASK: "/:id",
   STATUS: "/status",
+  REGISTER: "/register",
+  LOGIN: "/login",
 };
