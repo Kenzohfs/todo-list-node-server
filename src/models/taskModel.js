@@ -1,19 +1,23 @@
-const { TASK_STATUS } = require("../consts/defaultTaskStatus");
-
 class Task {
   title = "";
   responsable = "";
-  status = "";
+  statusId = "";
 
-  constructor(title = "", responsable = "", status = TASK_STATUS.TODO) {
+  constructor(title, responsable = "", statusId) {
     this.title = title;
     this.responsable = responsable;
-    this.status = status;
+    this.statusId = statusId;
   }
 
   validate() {
     if (!this.title) {
       const err = new Error("Title is required");
+      err.statusCode = 400;
+      throw err;
+    }
+
+    if (!this.statusId) {
+      const err = new Error("StatusId is required");
       err.statusCode = 400;
       throw err;
     }
@@ -51,7 +55,7 @@ class Task {
   }
 
   static requiredFields() {
-    return ["title"];
+    return ["title", "statusId"];
   }
 }
 

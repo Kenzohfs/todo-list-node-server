@@ -1,4 +1,5 @@
 const taskRepo = require("../repos/taskRepository");
+const statusRepo = require("../repos/statusRepository");
 const Task = require("../models/taskModel");
 const getHostnameFromIp = require("../utils/reverseDns");
 
@@ -7,15 +8,17 @@ exports.getTasks = async () => {
 };
 
 exports.createTask = async (data, req) => {
-  const taskModel = new Task(data.title, data.responsable, data.status);
+  const taskModel = new Task(data.title, data.responsable, data.statusId);
   taskModel.validate();
+
+  validateStatus(taskModel.statusId);
 
   const hostname = await getHostnameFromIp(req.ip);
   const taskData = {
     title: taskModel.title,
     description: taskModel.description || "",
     responsable: taskModel.responsable,
-    status: taskModel.status,
+    statusId: taskModel.statusId,
     hostname,
     createdAt: new Date(),
   };
@@ -31,6 +34,10 @@ exports.updateTask = async (id, updateData) => {
     throw err;
   }
 
+  if (updateData.statusId) {
+    await validateStatus(updateData.statusId);
+  }
+
   Task.validateUpdate(updateData);
 
   await taskRepo.updateTask(id, updateData);
@@ -38,4 +45,14 @@ exports.updateTask = async (id, updateData) => {
 
 exports.deleteTask = async (id) => {
   await taskRepo.deleteTask(id);
+};
+
+const validateStatus = async (statusId) => {
+  const status = await statusRepo.getStatusById(statusId);
+
+  if (!status) {
+    const err = new Error("Status not found");
+    err.statusCode = 404;
+    throw err;
+  }
 };
