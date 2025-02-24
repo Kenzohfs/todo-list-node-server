@@ -7,6 +7,6 @@ exports.register = asyncHandler(async (req, res) => {
 });
 
 exports.login = asyncHandler(async (req, res) => {
-  const token = await authHandler.login(req.body);
+  const token = await authHandler.login(req.body, req);
   res.json(token);
 });

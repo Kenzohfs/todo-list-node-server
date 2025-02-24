@@ -35,7 +35,7 @@ exports.register = async (data) => {
   return createdUser;
 };
 
-exports.login = async (data) => {
+exports.login = async (data, req) => {
   Auth.validate(data);
 
   const user = await userRepo.getUserByEmail(data.email);
