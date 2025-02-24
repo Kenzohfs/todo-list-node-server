@@ -1,6 +1,6 @@
 exports.ROUTES = {
-  GET_TASKS: "/",
-  POST_TASK: "/",
+  GET_TASKS: "/get-tasks",
+  POST_TASK: "/insert-tasks",
   PUT_TASK: "/:id",
   DELETE_TASK: "/:id",
   STATUS: "/status",
