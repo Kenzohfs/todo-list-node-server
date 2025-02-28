@@ -41,7 +41,7 @@ A API permite gerenciar tarefas e status, realizar autenticação de usuários (
 
 ## Pré-requisitos
 
-- [Node.js](https://nodejs.org/) (versão 14 ou superior)
+- [Node.js](https://nodejs.org/) (versão 20 ou superior)
 - [npm](https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/)
 - Conta no [Firebase](https://firebase.google.com/) (para autenticação com Google)
 
