@@ -50,7 +50,7 @@ A API permite gerenciar tarefas e status, realizar autenticação de usuários (
 1. **Clone o repositório:**
 
    ```bash
-   git clone https://github.com/seu-usuario/nome-do-repositorio.git
+   git clone https://github.com/Kenzohfs/todo-list-node-server.git
    cd nome-do-repositorio
    ```
 
