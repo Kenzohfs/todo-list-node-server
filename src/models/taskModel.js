@@ -35,27 +35,11 @@ class Task {
       error.statusCode = 400;
       throw error;
     }
-
-    const requiredFields = Task.requiredFields();
-    const missingFields = requiredFields.filter(
-      (field) => !keys.includes(field)
-    );
-    if (missingFields.length > 0) {
-      const error = new Error(
-        "The following fields are required: " + missingFields.join(", ")
-      );
-      error.statusCode = 400;
-      throw error;
-    }
   }
 
   static allowedFields() {
     const taskAux = new Task();
     return Object.keys(taskAux);
-  }
-
-  static requiredFields() {
-    return ["title", "statusId"];
   }
 }
 

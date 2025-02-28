@@ -2,6 +2,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const express = require("express");
+const cors = require("cors");
 
 const { BASE_PATHS } = require("./src/consts/basePaths");
 
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 app.use(BASE_PATHS.SERVER, systemRoutes);
 app.use(BASE_PATHS.TASKS, protect, taskRoutes);

@@ -2,7 +2,7 @@ const statusRepo = require("../repos/statusRepository");
 const Status = require("../models/statusModel");
 
 exports.getStatus = async () => {
-  return await statusRepo.getAllTasks();
+  return await statusRepo.getAllStatus();
 };
 
 exports.createStatus = async (data) => {
@@ -11,7 +11,7 @@ exports.createStatus = async (data) => {
 
   const statusData = {
     description: statusModel.description,
-    createdAt: new Date(),
+    createdAt: new Date().toISOString(),
   };
 
   return await statusRepo.createStatus(statusData);

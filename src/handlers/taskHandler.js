@@ -11,7 +11,7 @@ exports.createTask = async (data, req) => {
   const taskModel = new Task(data.title, data.responsable, data.statusId);
   taskModel.validate();
 
-  validateStatus(taskModel.statusId);
+  await validateStatus(taskModel.statusId);
 
   const hostname = await getHostnameFromIp(req.ip);
   const taskData = {
@@ -20,7 +20,7 @@ exports.createTask = async (data, req) => {
     responsable: taskModel.responsable,
     statusId: taskModel.statusId,
     hostname,
-    createdAt: new Date(),
+    createdAt: new Date().toISOString(),
   };
 
   return await taskRepo.createTask(taskData);

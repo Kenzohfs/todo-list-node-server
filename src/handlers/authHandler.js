@@ -12,7 +12,7 @@ exports.register = async (data) => {
 
   const existingUser = await userRepo.getUserByEmail(data.email);
   if (existingUser) {
-    const err = new Error("User already exists");
+    const err = new Error("Usuário já existe");
     err.statusCode = 400;
     throw err;
   }
@@ -26,7 +26,7 @@ exports.register = async (data) => {
     name: user.name,
     email: user.email,
     password: hashedPassword,
-    createdAt: new Date(),
+    createdAt: new Date().toISOString(),
   };
 
   const createdUser = await userRepo.createUser(newUser);
@@ -40,14 +40,14 @@ exports.login = async (data, req) => {
 
   const user = await userRepo.getUserByEmail(data.email);
   if (!user) {
-    const err = new Error("Invalid email or password");
+    const err = new Error("Email ou senha inválidos");
     err.statusCode = 401;
     throw err;
   }
 
   const valid = await bcrypt.compare(data.password, user.password);
   if (!valid) {
-    const err = new Error("Invalid email or password");
+    const err = new Error("Email ou senha inválidos");
     err.statusCode = 401;
     throw err;
   }
