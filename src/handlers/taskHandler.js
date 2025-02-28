@@ -23,13 +23,15 @@ exports.createTask = async (data, req) => {
     createdAt: new Date().toISOString(),
   };
 
-  return await taskRepo.createTask(taskData);
+  const task = await taskRepo.createTask(taskData);
+
+  return task;
 };
 
 exports.updateTask = async (id, updateData) => {
   const task = await taskRepo.getTaskById(id);
   if (!task) {
-    const err = new Error("Task not found");
+    const err = new Error("Tarefa não encontrada");
     err.statusCode = 404;
     throw err;
   }
@@ -51,7 +53,7 @@ const validateStatus = async (statusId) => {
   const status = await statusRepo.getStatusById(statusId);
 
   if (!status) {
-    const err = new Error("Status not found");
+    const err = new Error("Status não encontrado");
     err.statusCode = 404;
     throw err;
   }

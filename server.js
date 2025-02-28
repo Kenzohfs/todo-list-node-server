@@ -3,6 +3,7 @@ dotenv.config();
 
 const express = require("express");
 const cors = require("cors");
+const http = require("http");
 
 const { BASE_PATHS } = require("./src/consts/basePaths");
 
@@ -12,9 +13,11 @@ const statusRoutes = require("./src/routes/statusRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 
 const { protect } = require("./src/middleware/authMiddleware");
+const { init } = require("./src/ws/socket");
 
 const PORT = process.env.PORT || 3000;
 const app = express();
+const server = http.createServer(app);
 
 app.use(express.json());
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
@@ -32,6 +35,8 @@ app.use((err, req, res, next) => {
   res.status(errCode).json({ message: err.message });
 });
 
-app.listen(PORT, () => {
+init(server, { cors: { origin: "*" } });
+
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
