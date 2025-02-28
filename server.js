@@ -1,21 +1,42 @@
-const express = require('express');
-const dotenv = require('dotenv');
-
+const dotenv = require("dotenv");
 dotenv.config();
 
+const express = require("express");
+const cors = require("cors");
+const http = require("http");
+
+const { BASE_PATHS } = require("./src/consts/basePaths");
+
+const systemRoutes = require("./src/routes/systemRoutes");
+const taskRoutes = require("./src/routes/taskRoutes");
+const statusRoutes = require("./src/routes/statusRoutes");
+const authRoutes = require("./src/routes/authRoutes");
+
+const { protect } = require("./src/middleware/authMiddleware");
+const { init } = require("./src/ws/socket");
+
 const PORT = process.env.PORT || 3000;
-
 const app = express();
+const server = http.createServer(app);
+
 app.use(express.json());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
-const router = express.Router();
+app.use(BASE_PATHS.SERVER, systemRoutes);
+app.use(BASE_PATHS.TASKS, protect, taskRoutes);
+app.use(BASE_PATHS.AUTH, authRoutes);
+app.use(BASE_PATHS.STATUS, protect, statusRoutes);
 
-router.get('/', (req, res) => {
-  res.json({ res: 'Server is up and running' });
+// Middleware de erros
+app.use((err, req, res, next) => {
+  console.log(err.stack);
+  const errCode = err.statusCode || 500;
+
+  res.status(errCode).json({ message: err.message });
 });
 
-app.use('/', router);
+init(server, { cors: { origin: "*" } });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-})
+});
