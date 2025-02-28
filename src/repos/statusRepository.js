@@ -1,4 +1,4 @@
-const db = require("../../config/firebase");
+const { db } = require("../../config/firebase");
 const { COLLECTIONS } = require("../consts/collections");
 
 exports.getAllStatus = async () => {

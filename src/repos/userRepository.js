@@ -1,4 +1,4 @@
-const db = require("../../config/firebase");
+const { db } = require("../../config/firebase");
 const { COLLECTIONS } = require("../consts/collections");
 
 exports.createUser = async (userData) => {
@@ -22,4 +22,12 @@ exports.getUserByEmail = async (email) => {
   });
 
   return user;
+};
+
+exports.getUserById = async (id) => {
+  const doc = await db.collection(COLLECTIONS.USERS).doc(id).get();
+
+  if (!doc.exists) return null;
+
+  return { id: doc.id, ...doc.data() };
 };

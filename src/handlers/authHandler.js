@@ -3,9 +3,30 @@ const bcrypt = require("bcrypt");
 const userRepo = require("../repos/userRepository");
 const User = require("../models/userModel");
 const Auth = require("../models/authModel");
+const { admin } = require("../../config/firebase");
 
 const JWT_SECRET = process.env.JWT_SECRET || "secret123";
 const SALT_ROUNDS = 10;
+
+exports.registerOrUpdate = async (idToken) => {
+  const decodedToken = await admin.auth().verifyIdToken(idToken);
+  const uid = decodedToken.uid;
+  const email = decodedToken.email;
+  const displayName = decodedToken.name;
+
+  const user = await userRepo.getUserById(uid);
+
+  if (!user) {
+    await userRepo.createUser({
+      uid,
+      email,
+      displayName,
+      createdAt: new Date().toISOString(),
+    });
+  }
+
+  return { uid, email, displayName };
+};
 
 exports.register = async (data) => {
   Auth.validate(data);

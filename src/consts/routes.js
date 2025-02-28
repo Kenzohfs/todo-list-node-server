@@ -6,6 +6,7 @@ exports.ROUTES = {
   STATUS: "/status",
   REGISTER: "/register",
   LOGIN: "/login",
+  GOOGLE: "/google",
   GET_STATUS: "/",
   POST_STATUS: "/",
   PUT_STATUS: "/:id",

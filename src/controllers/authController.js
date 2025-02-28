@@ -10,3 +10,8 @@ exports.login = asyncHandler(async (req, res) => {
   const token = await authHandler.login(req.body, req);
   res.json(token);
 });
+
+exports.registerOrUpdate = asyncHandler(async (req, res) => {
+  const user = await authHandler.registerOrUpdate(req.body.token);
+  res.status(200).json({ message: "Usuário atualizado com sucesso", user });
+});
