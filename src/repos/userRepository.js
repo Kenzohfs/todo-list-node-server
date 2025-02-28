@@ -12,6 +12,7 @@ exports.getUserByEmail = async (email) => {
   const snapshot = await db
     .collection(COLLECTIONS.USERS)
     .where("email", "==", email)
+    .where("password", "!=", null)
     .get();
 
   if (snapshot.empty) return null;
