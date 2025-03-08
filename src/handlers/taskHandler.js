@@ -8,7 +8,7 @@ exports.getTasks = async () => {
 };
 
 exports.createTask = async (data, req) => {
-  const taskModel = new Task(data.title, data.responsable, data.statusId);
+  const taskModel = new Task(data.title, data.responsable, data.statusId, data.team);
   taskModel.validate();
 
   await validateStatus(taskModel.statusId);
@@ -19,6 +19,7 @@ exports.createTask = async (data, req) => {
     description: taskModel.description || "",
     responsable: taskModel.responsable,
     statusId: taskModel.statusId,
+    team: taskModel.team,
     hostname,
     createdAt: new Date().toISOString(),
   };

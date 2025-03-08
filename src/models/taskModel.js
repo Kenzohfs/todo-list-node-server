@@ -2,11 +2,13 @@ class Task {
   title = "";
   responsable = "";
   statusId = "";
+  team = "";
 
-  constructor(title, responsable = "", statusId) {
+  constructor(title, responsable = "", statusId, team = "") {
     this.title = title;
     this.responsable = responsable;
     this.statusId = statusId;
+    this.team = team;
   }
 
   validate() {
@@ -18,6 +20,12 @@ class Task {
 
     if (!this.statusId) {
       const err = new Error("StatusId is required");
+      err.statusCode = 400;
+      throw err;
+    }
+
+    if (!this.team) {
+      const err = new Error("Team is required");
       err.statusCode = 400;
       throw err;
     }
